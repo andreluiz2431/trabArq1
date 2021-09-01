@@ -13,6 +13,10 @@ Nomes: André, Daniel, Laura
 
 **Execução**
 
+  Requisitos
+
+    - Possuir GCC (Caso precise compilar)
+
   Para a compilação do programa pode ser utilizado o GCC.
     
     gcc main.c -o arqMonociclo
@@ -22,7 +26,7 @@ Nomes: André, Daniel, Laura
     ./arqMonociclo
 
 
-**Conclusão**
+**Sobre**
 
   Xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
