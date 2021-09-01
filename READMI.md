@@ -1,5 +1,5 @@
 ************************************************************************************
-Trabalho 1. Arquitetura de computadores I
+Trabalho 1. Arquitetura de Computadores I
 -----------------------------------------
 
 
@@ -10,9 +10,17 @@ Nomes: André, Daniel, Laura
 
   Xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
+
 **Execução**
 
-  Xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  Para a compilação do programa pode ser utilizado o GCC.
+    
+    gcc main.c -o arqMonociclo
+
+  E sua execução executar no console (ou executar pela pasta raiz do programa o arquivo arqMonociclo.exe)
+
+    ./arqMonociclo
+
 
 **Conclusão**
 
