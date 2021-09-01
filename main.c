@@ -1,7 +1,9 @@
+// Inclusão de bibs
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 
+// Declarando estrutura (lista) de instruções que serão inseridas
 typedef struct instrucao_t{
     char instrucao [6];
     char reg1[20];
@@ -10,6 +12,7 @@ typedef struct instrucao_t{
     struct instrucao_t *prox;
 }instrucao_t;
 
+// Função para efetuar a busca da instrução com base na entrada de dados
 void buscaInstrucao(instrucao_t *instrucao, char *entrada){
     char *token = NULL;
     char sep[] = ", ";
@@ -45,6 +48,7 @@ void buscaInstrucao(instrucao_t *instrucao, char *entrada){
     printf(" da memória de instruções.\n");
 }
 
+// Função que decodifica a instrução
 void decodificaInstrucao(instrucao_t *instrucao) {
     if(strcmp(instrucao->instrucao, "add") == 0){
         printf("\nConfigura os sinais de controle da arquitetura para uma instrução ADD.\n");
@@ -146,6 +150,7 @@ void decodificaInstrucao(instrucao_t *instrucao) {
     // VERIFICAR COM O ARTHUR - No fim, imprimir a instrução decodificada e os sinais de controle;{
 }
 
+// Função de execução das operações inseridas nas instruções
 void execucao(instrucao_t *instrucao) {
     if(strcmp(instrucao->instrucao, "add") == 0){
         printf("\nUsa a ULA para calcular a soma dos valores armazenados nos registradores (%s e %s) e armazena no registrador %s.\n", instrucao->reg2, instrucao->reg3, instrucao->reg1);
@@ -173,6 +178,7 @@ void execucao(instrucao_t *instrucao) {
     }
 }
 
+// Função para verificar se possui acesso a memória de dados "lw" e "sw"
 void acessoNaMemoria(instrucao_t *instrucao){
     if(strcmp(instrucao->instrucao, "lw") == 0){
         printf("\nbusca na memoria o valor armazenado na posição %s.\n",instrucao->reg2);
@@ -184,6 +190,7 @@ void acessoNaMemoria(instrucao_t *instrucao){
     }
 }
 
+// Função para escrever no banco de registradores com base nas instruções inseridas
 void writeBack(instrucao_t *instrucao){
     if(strcmp(instrucao->instrucao, "add") ==0 ){
         printf("\nescreve o valor da saida da ula no registrador %s. \n\n", instrucao->reg1);
@@ -204,19 +211,30 @@ void writeBack(instrucao_t *instrucao){
 
 
 int main(){
-    // cria uma variavel do tipo chamada instrucao do tipo variavel_t
-    //que armazenará a instrução lida do arquivo de entrada
+    // cria uma variavel instrução do tipo scruct variavel_t (lista)
     instrucao_t instrucao;
-    //declaração da array que será utilizado para capturar as linhas do arquivo de entrada
+
+    //declaração da array que será utilizado para capturar as instruções da entrada
     char entrada[250];
+
+    // inicializanmd
+    int ciclos = 0;
+
     while(fgets(entrada, 250, stdin) != NULL){
+
         buscaInstrucao(&instrucao, entrada); // etapa 1: realiza a busca de instruções (fetch)
+
         decodificaInstrucao(&instrucao); // etapa 2: realiza a decodificação da instrução e configura os sinais de controle da arquitetura (decode)
-        execucao(&instrucao);//execute
+
+        execucao(&instrucao); // execute
         acessoNaMemoria(&instrucao);
         writeBack(&instrucao);
         //mem
         //write back
+
+        ciclos++;
+
+        printf("\nCiclos: %d\n", ciclos);
 
         printf("-----------------------------------------------------");
 
