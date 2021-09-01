@@ -3,7 +3,7 @@ Trabalho 1. Arquitetura de Computadores I
 -----------------------------------------
 
 
-Nomes: André, Daniel, Laura
+**Nomes:** *André, Daniel, Laura*
 ************************************************************************************
 
 **Introdução**
@@ -21,7 +21,7 @@ Nomes: André, Daniel, Laura
     
     gcc main.c -o arqMonociclo
 
-  E sua execução executar no console (ou executar pela pasta raiz do programa o arquivo arqMonociclo.exe)
+  E ao executar no console (ou executar pela pasta raiz do programa o arquivo arqMonociclo.exe)
 
     ./arqMonociclo
 
