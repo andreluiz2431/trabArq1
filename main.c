@@ -16,35 +16,47 @@ typedef struct instrucao_t{
 void buscaInstrucao(instrucao_t *instrucao, char *entrada){
     char *token = NULL;
     char sep[] = ", ";
+
     if (entrada[strlen(entrada)-1] == '\n') {
         entrada[strlen(entrada)-1] = '\0';
     }
+
     token = strtok(entrada, sep);
     sprintf(instrucao->instrucao, "%s", token);
     token = strtok(NULL, sep);
     sprintf(instrucao->reg1, "%s", token);
     token = strtok(NULL, sep);
+
     if(token != NULL){
         sprintf(instrucao->reg2, "%s", token);
     } else{
         instrucao->reg2[0] = '\0';
     }
+
     token = strtok(NULL, sep);
+
     if(token != NULL){
         sprintf(instrucao->reg3, "%s", token);
     } else{
         instrucao->reg3[0] = '\0';
     }
+
     token = strtok(NULL, sep);
+
     //printf("\n%s\n", token);
+    
     fflush(stdin);
+
     printf("\nBusca da instrução %s %s", instrucao->instrucao, instrucao->reg1);
+
     if (instrucao->reg2[0] != '\0'){
         printf(", %s", instrucao->reg2);
     }
+
     if (instrucao->reg3[0] != '\0'){
         printf(", %s", instrucao->reg3);
     }
+
     printf(" da memória de instruções.\n");
 }
 
