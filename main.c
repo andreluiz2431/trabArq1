@@ -1,3 +1,16 @@
+//******************************************************
+/*
+
+Trabalho 1. ARQUITETURA E ORGANIZACAO DE COMPUTADORES I 
+------------------------------------------------------
+Nomes: 
+  André Luiz Montanha
+  Daniel Lopes Dienstmann   
+  Laura Aparecida Oliveira Silva Soares
+
+*/
+//******************************************************
+
 // Inclusão de bibs
 #include <stdio.h>
 #include <string.h>
@@ -15,17 +28,17 @@ typedef struct instrucao_t{
 // Função para efetuar a busca da instrução com base na entrada de dados
 void buscaInstrucao(instrucao_t *instrucao, char *entrada){
     char *token = NULL;
-    char sep[] = ", ";
+    char separacao[] = ", "; // o que separa cada termo da instrução
 
     if (entrada[strlen(entrada)-1] == '\n') {
         entrada[strlen(entrada)-1] = '\0';
     }
 
-    token = strtok(entrada, sep);
+    token = strtok(entrada, separacao);
     sprintf(instrucao->instrucao, "%s", token);
-    token = strtok(NULL, sep);
+    token = strtok(NULL, separacao);
     sprintf(instrucao->reg1, "%s", token);
-    token = strtok(NULL, sep);
+    token = strtok(NULL, separacao);
 
     if(token != NULL){
         sprintf(instrucao->reg2, "%s", token);
@@ -33,7 +46,7 @@ void buscaInstrucao(instrucao_t *instrucao, char *entrada){
         instrucao->reg2[0] = '\0';
     }
 
-    token = strtok(NULL, sep);
+    token = strtok(NULL, separacao);
 
     if(token != NULL){
         sprintf(instrucao->reg3, "%s", token);
@@ -41,7 +54,7 @@ void buscaInstrucao(instrucao_t *instrucao, char *entrada){
         instrucao->reg3[0] = '\0';
     }
 
-    token = strtok(NULL, sep);
+    token = strtok(NULL, separacao);
 
     //printf("\n%s\n", token);
     
@@ -76,6 +89,7 @@ void decodificaInstrucao(instrucao_t *instrucao) {
        // printf("\n100000 - seta como false os sinais MemWrite e MemRead\n");
     } else if (strcmp(instrucao->instrucao, "sub") == 0){
         printf("\nConfigura os sinais de controle da arquitetura para uma instrução SUB.\n");
+
         printf("\no codigo da instrução é:\n");
         printf("  RegDst: 1\n");
         printf("  branch: 0\n");
@@ -88,6 +102,7 @@ void decodificaInstrucao(instrucao_t *instrucao) {
         //printf("\n100010\n");
     } else if (strcmp(instrucao->instrucao, "slt") == 0){
         printf("\nConfigura os sinais de controle da arquitetura para uma instrução SLT.\n");
+
         printf("\no codigo da instrução é:\n");
         printf("  RegDst: 1\n");
         printf("  branch: 0\n");
@@ -100,6 +115,7 @@ void decodificaInstrucao(instrucao_t *instrucao) {
        // printf("\n101010\n");
     } else if (strcmp(instrucao->instrucao, "sw") == 0){
         printf("\nConfigura os sinais de controle da arquitetura para uma instrução SW.\n");
+
         printf("\no codigo da instrução é:\n");
        // printf("\nRegDst: 1");
         printf("  branch: 0\n");
@@ -112,6 +128,7 @@ void decodificaInstrucao(instrucao_t *instrucao) {
        // printf("\n\n");
     } else if (strcmp(instrucao->instrucao, "lw") == 0){
         printf("\nConfigura os sinais de controle da arquitetura para uma instrução LW.\n");
+
         printf("\no codigo da instrução é:\n");
         printf("  RegDst: 0\n");
         printf("  branch: 0\n");
@@ -124,6 +141,7 @@ void decodificaInstrucao(instrucao_t *instrucao) {
        // printf("\n\n");
     } else if (strcmp(instrucao->instrucao, "beq") == 0){
         printf("\nConfigura os sinais de controle da arquitetura para uma instrução BEQ.\n");
+
         printf("\no codigo da instrução é:\n");
        // printf("\nRegDst: 1");
         printf("  branch: 1\n");
@@ -136,6 +154,7 @@ void decodificaInstrucao(instrucao_t *instrucao) {
         //printf("\n\n");
     } else if (strcmp(instrucao->instrucao, "bne") == 0){
         printf("\nConfigura os sinais de controle da arquitetura para uma instrução BNE.\n");
+
         printf("\no codigo da instrução é:\n");
         printf("  RegDst: 1\n");
         printf("  branch: 0\n");
@@ -148,6 +167,7 @@ void decodificaInstrucao(instrucao_t *instrucao) {
        // printf("\n\n");
     } else if (strcmp(instrucao->instrucao, "j") == 0){
         printf("\nConfigura os sinais de controle da arquitetura para uma instrução JUMP.\n");
+        
         printf("\no codigo da instrução é:\n");
         printf("  JUMP: 1\n");
         printf("  branch: 1\n");
@@ -159,7 +179,7 @@ void decodificaInstrucao(instrucao_t *instrucao) {
         printf("  regwrite: 0\n");
        // printf("\n000000\n");
     }
-    // VERIFICAR COM O ARTHUR - No fim, imprimir a instrução decodificada e os sinais de controle;{
+    
 }
 
 // Função de execução das operações inseridas nas instruções
@@ -229,7 +249,7 @@ int main(){
     //declaração da array que será utilizado para capturar as instruções da entrada
     char entrada[250];
 
-    // inicializanmd
+    // inicializando contagem de ciclo
     int ciclos = 0;
 
     while(fgets(entrada, 250, stdin) != NULL){
@@ -238,14 +258,16 @@ int main(){
 
         decodificaInstrucao(&instrucao); // etapa 2: realiza a decodificação da instrução e configura os sinais de controle da arquitetura (decode)
 
-        execucao(&instrucao); // execute
-        acessoNaMemoria(&instrucao);
-        writeBack(&instrucao);
-        //mem
-        //write back
+        execucao(&instrucao); // etapa 3: realiza a execução da arquitetura 
 
+        acessoNaMemoria(&instrucao); // etapa 4: reliza o acesso a memoria quando necessário 
+
+        writeBack(&instrucao); // etapa 5: informa que foi escrito no banco de registradores o valor
+        
+        // Incrementa o número de ciclos da arquitetura
         ciclos++;
 
+        // Imprime a quantidade de ciclos passada pela arquitetura
         printf("\nCiclos: %d\n", ciclos);
 
         printf("-----------------------------------------------------");
@@ -256,6 +278,7 @@ int main(){
 }
 
 /*
+
 Conjunto de instruções
 
 add $s1, $s2, $s3
