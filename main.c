@@ -44,7 +44,7 @@ void buscaInstrucao(instrucao_t *instrucao, char *entrada){
 
     // verifica se token possui mais informação (se sim, ele armazena em reg2 na variavel estruturada)
     if(token != NULL){
-        sprintf(instrucao->reg2, "%s", token);
+        sprintf(instrucao->reg2, "%s", token); // define na variavel estruturada em reg2 a primeira informação de token
     } else{
         instrucao->reg2[0] = '\0';
     }
@@ -53,7 +53,7 @@ void buscaInstrucao(instrucao_t *instrucao, char *entrada){
 
     // verifica se token possui mais informação (se sim, ele armazena em reg3 na variavel estruturada)
     if(token != NULL){
-        sprintf(instrucao->reg3, "%s", token);
+        sprintf(instrucao->reg3, "%s", token); // define na variavel estruturada em reg3 a primeira informação de token
     } else{
         instrucao->reg3[0] = '\0';
     }
