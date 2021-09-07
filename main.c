@@ -261,7 +261,7 @@ int main(){
     // inicializando contagem de ciclo
     int ciclos = 0;
 
-    while(fgets(entrada, 250, stdin) != NULL){
+    while(fgets(entrada, 250, stdin) != NULL){ // enqunto recebe dados segue executando (LOOP)
 
         buscaInstrucao(&instrucao, entrada); // etapa 1: realiza a busca de instruções (fetch)
 
