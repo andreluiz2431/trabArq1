@@ -16,6 +16,8 @@ Nomes:
 #include <string.h>
 #include <stdlib.h>
 
+#define TAM 42
+
 // Definindo estrutura (lista) de instruções que serão inseridas
 typedef struct instrucao_t{
     char instrucao [6];
@@ -24,6 +26,24 @@ typedef struct instrucao_t{
     char reg3[20];
     struct instrucao_t *prox;
 } instrucao_t;
+
+void imprimeCod(char *RegDst, char *RegWrite, char *ALUSrca, char *MemRead, char *MemWrite, char *MemToReg, char *IorD, char *IRWrite, char *PCWrite, char *PCWriteCond, char *ALUop, char *ALUSrcb, char *PCSrc, char *funcao){
+  printf("\n\nO codigo da %s é:", funcao);
+
+  printf("\n  RegDst: %s", RegDst);
+  printf("\n  RegWrite: %s", RegWrite);
+  printf("\n  ALUSrca: %s", ALUSrca);
+  printf("\n  MemRead: %s", MemRead);
+  printf("\n  MemWrite: %s", MemWrite);
+  printf("\n  MemToReg: %s", MemToReg);
+  printf("\n  IorD: %s", IorD);
+  printf("\n  IRWrite: %s", IRWrite);
+  printf("\n  PCWrite: %s", PCWrite);
+  printf("\n  PCWriteCond: %s", PCWriteCond);
+  printf("\n  ALUop: %s", ALUop);
+  printf("\n  ALUSrcb: %s", ALUSrcb);
+  printf("\n  PCSrc: %s\n", PCSrc);
+}
 
 // Função para efetuar a busca da instrução com base na entrada de dados
 void buscaInstrucao(instrucao_t *instrucao, char *entrada){
@@ -75,147 +95,82 @@ void buscaInstrucao(instrucao_t *instrucao, char *entrada){
     }
 
     printf(" da memória de instruções.\n");
+
+
+    // VERIFICAÇÃO PARA O COD
+
+    imprimeCod("NULL", "NULL", "0", "1", "NULL", "NULL", "0", "1", "1", "NULL", "00", "01", "00", "Busca");
+
 }
 
 // Função que decodifica a instrução
 void decodificaInstrucao(instrucao_t *instrucao) {
-    if(strcmp(instrucao->instrucao, "add") == 0){ // verifica se instrução é ADD
-        printf("\nConfigura os sinais de controle da arquitetura para uma instrução ADD.\n");
+    //char *RegDst, *RegWrite, *ALUSrca, *MemRead, *MemWrite, *MemToReg, *IorD, *IRWrite, *PCWrite, *PCWriteCond, *ALUop, *ALUSrcb, *PCSrc;
 
-        printf("\nO codigo da instrução é:\n");
-        printf("  RegDst: 1\n");
-        printf("  branch: 0\n");
-        printf("  MemRead: 0\n");
-        printf("  memtoreg: 0\n");
-        printf("  ALUOp: 010\n");
-        printf("  MemWrite: 0\n");
-        printf("  ALUSrc: 0\n");
-        printf("  regwrite: 1\n");
-       // printf("\n100000 - seta como false os sinais MemWrite e MemRead\n");
-    } else if (strcmp(instrucao->instrucao, "sub") == 0){ // verifica se instrução é SUB
-        printf("\nConfigura os sinais de controle da arquitetura para uma instrução SUB.\n");
-
-        printf("\no codigo da instrução é:\n");
-        printf("  RegDst: 1\n");
-        printf("  branch: 0\n");
-        printf("  MemRead: 0\n");
-        printf("  memtoreg: 0\n");
-        printf("  ALUOp: 110\n");
-        printf("  MemWrite: 0\n");
-        printf("  ALUSrc: 0\n");
-        printf("  regwrite: 1\n");
-        //printf("\n100010\n");
-    } else if (strcmp(instrucao->instrucao, "slt") == 0){ // verifica se instrução é SLT
-        printf("\nConfigura os sinais de controle da arquitetura para uma instrução SLT.\n");
-
-        printf("\no codigo da instrução é:\n");
-        printf("  RegDst: 1\n");
-        printf("  branch: 0\n");
-        printf("  MemRead: 0\n");
-        printf("  memtoreg: 0\n");
-        printf("  ALUOp: 111\n");
-        printf("  MemWrite: 0\n");
-        printf("  ALUSrc: 0\n");
-        printf("  regwrite: 1\n");
-       // printf("\n101010\n");
-    } else if (strcmp(instrucao->instrucao, "sw") == 0){ // verifica se instrução é SW
-        printf("\nConfigura os sinais de controle da arquitetura para uma instrução SW.\n");
-
-        printf("\no codigo da instrução é:\n");
-       // printf("\nRegDst: 1");
-        printf("  branch: 0\n");
-        printf("  MemRead: 0\n");
-       // printf("\nmemtoreg: 0");
-        printf("  ALUOp: 010\n");
-        printf("  MemWrite: 1\n");
-        printf("  ALUSrc: 1\n");
-        printf("  regwrite: 0\n");
-       // printf("\n\n");
-    } else if (strcmp(instrucao->instrucao, "lw") == 0){ // verifica se instrução é LW
-        printf("\nConfigura os sinais de controle da arquitetura para uma instrução LW.\n");
-
-        printf("\no codigo da instrução é:\n");
-        printf("  RegDst: 0\n");
-        printf("  branch: 0\n");
-        printf("  MemRead: 1\n");
-        printf("  memtoreg: 1\n");
-        printf("  ALUOp: 010\n");
-        printf("  MemWrite: 0\n");
-        printf("  ALUSrc: 1\n");
-        printf("  regwrite: 1\n");
-       // printf("\n\n");
-    } else if (strcmp(instrucao->instrucao, "beq") == 0){ // verifica se instrução é BEQ
-        printf("\nConfigura os sinais de controle da arquitetura para uma instrução BEQ.\n");
-
-        printf("\no codigo da instrução é:\n");
-       // printf("\nRegDst: 1");
-        printf("  branch: 1\n");
-        printf("  MemRead: 0\n");
-        //printf("\nmemtoreg: 0");
-        printf("  ALUOp: 110\n");
-        printf("  MemWrite: 0\n");
-        printf("  ALUSrc: 0\n");
-        printf("  regwrite: 0\n");
-        //printf("\n\n");
-    } else if (strcmp(instrucao->instrucao, "bne") == 0){ // verifica se instrução é BNE
-        printf("\nConfigura os sinais de controle da arquitetura para uma instrução BNE.\n");
-
-        printf("\no codigo da instrução é:\n");
-        printf("  RegDst: 1\n");
-        printf("  branch: 0\n");
-        printf("  MemRead: 0\n");
-        printf("  memtoreg: 0\n");
-        printf("  ALUOp: 110\n");
-        printf("  MemWrite: 0\n");
-        printf("  ALUSrc: 0\n");
-        printf("  regwrite: 1\n");
-       // printf("\n\n");
-    } else if (strcmp(instrucao->instrucao, "j") == 0){ // verifica se instrução é J (JUMP)
-        printf("\nConfigura os sinais de controle da arquitetura para uma instrução JUMP.\n");
-        
-        printf("\no codigo da instrução é:\n");
-        printf("  JUMP: 1\n");
-        printf("  branch: 1\n");
-        printf("  MemRead: 0\n");
-        //printf("\nmemtoreg: 0");
-        //printf("\nALUOp: 00");
-        printf("  MemWrite: 0\n");
-        //printf("\nALUSrc: 0");
-        printf("  regwrite: 0\n");
-       // printf("\n000000\n");
-    }
-    
+    imprimeCod("NULL", "NULL", "0", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "00", "11", "NULL", "Decodificacao");
 }
 
 // Função de execução das operações inseridas nas instruções
-void execucao(instrucao_t *instrucao) {
+void execucao(instrucao_t *instrucao, int *ciclos) {
     if(strcmp(instrucao->instrucao, "add") == 0){ // verifica se instrução é ADD
         printf("\nUsa a ULA para calcular a soma dos valores armazenados nos registradores (%s e %s) e armazena no registrador %s.\n", instrucao->reg2, instrucao->reg3, instrucao->reg1);
+
+        (*ciclos) = (*ciclos) + 4;
+
+        imprimeCod("NULL", "NULL", "1", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "010", "00", "NULL", "Execucao");
     }
     else if (strcmp(instrucao->instrucao, "sub") == 0){ // verifica se instrução é SUB
         printf("\nUsa a ULA para calcular a subtração dos valores armazenados nos registradores (%s e %s) e armazena no registrador %s.\n", instrucao->reg2, instrucao->reg3, instrucao->reg1);
+        
+        (*ciclos) = (*ciclos) + 4;
+        
+        imprimeCod("NULL", "NULL", "1", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "110", "00", "NULL", "Execucao");
     }
     else if (strcmp(instrucao->instrucao, "slt") == 0){ // verifica se instrução é SLT
         printf("\nUsa a ULA para compar se um numero e menor que o outro (%s e %s) e vai para o registrador %s.\n", instrucao->reg2, instrucao->reg3, instrucao->reg1);
+        
+        (*ciclos) = (*ciclos) + 4;
+        
+        imprimeCod("NULL", "NULL", "1", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "000", "00", "NULL", "Execucao");
     }
     else if (strcmp(instrucao->instrucao, "sw") == 0){ // verifica se instrução é SW
         printf("\nUsa a ULA para encontrar a posicao da memoria %s e passa para o Data Memory.\n", instrucao->reg2);
+        
+        (*ciclos) = (*ciclos) + 4;
+
+        imprimeCod("NULL", "NULL", "1", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "00", "10", "NULL", "Execucao");
     }
     else if (strcmp(instrucao->instrucao, "lw") == 0){ // verifica se instrução é LW
         // sw $s0, 100($t0)
         printf("\nUsa a ULA para encontrar a posicao da memoria %s e passa para o Data Memory.\n", instrucao->reg2);
+
+        (*ciclos) = (*ciclos) + 5;
+
+        imprimeCod("NULL", "NULL", "1", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "00", "10", "NULL", "Execucao");
     }
     else if (strcmp(instrucao->instrucao, "beq") == 0){ // verifica se instrução é BEQ 
         // beq $t0, $t1, LOOP
         printf("\nUsa a ULA para comprar se os valores dos registradores (%s e %s) sao iguais e vai para a label %s.\n", instrucao->reg1, instrucao->reg2, instrucao->reg3);
+
+        (*ciclos) = (*ciclos) + 3;
+
+        imprimeCod("NULL", "NULL", "1", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "1", "01", "00", "1", "Execucao");
     }
     else if (strcmp(instrucao->instrucao, "bne") == 0){ // verifica se instrução é BNE
         // bnq $t0, $t1, LOOP
         printf("\nUsa a ULA para comparar se os valores dos registradores (%s e %s) nao sao iguais e vai para a label %s.\n", instrucao->reg1, instrucao->reg2, instrucao->reg3);
+
+        (*ciclos) = (*ciclos) + 3;
+
+        imprimeCod("NULL", "NULL", "1", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "1", "01", "00", "1", "Execucao");
     }
     else if (strcmp(instrucao->instrucao, "j") == 0){  // verifica se instrução é J (jump)
         //j LOOP
         printf("\nUsa a ULA para ir ao endereco de destino %s. \n", instrucao->reg1);
+
+        (*ciclos) = (*ciclos) + 3;
+
+        imprimeCod("NULL", "1", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "1", "NULL", "NULL", "10", "Execucao");
     }
 }
 
@@ -223,9 +178,14 @@ void execucao(instrucao_t *instrucao) {
 void acessoNaMemoria(instrucao_t *instrucao){
     if(strcmp(instrucao->instrucao, "lw") == 0){ // verifica se instrução é LW
         printf("\nbusca na memoria o valor armazenado na posição %s.\n",instrucao->reg2);
+    
+        imprimeCod("NULL", "NULL", "NULL", "1", "NULL", "NULL", "1", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "Acesso de memoria");
     }
+    
     else if(strcmp(instrucao->instrucao, "sw") == 0){ // verifica se instrução é SW
         printf("\nsalva na memoria o valor do registrador %s na posição %s.\n",instrucao->reg1, instrucao->reg2);
+
+        imprimeCod("NULL", "NULL", "NULL", "NULL", "1", "NULL", "1", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "Acesso de memoria");
     }else{ // caso não satisfaça nenhuma das condições anteriores
         printf("\n%s não tem acesso a memória", instrucao->instrucao);
     }
@@ -254,35 +214,53 @@ void writeBack(instrucao_t *instrucao){
 int main(){
     // cria uma variavel instrução do tipo scruct variavel_t (lista)
     instrucao_t instrucao;
-
-    //declaração da array que será utilizado para capturar as instruções da entrada
-    char entrada[250];
-
+    
     // inicializando contagem de ciclo
-    int ciclos = 0;
+    int var = 0;
+    int *ciclos = &var; // inicializa ponteiro ciclos que armazena endereço de var, no qual será Incrementado os ciclos
 
-    while(fgets(entrada, 250, stdin) != NULL){ // enqunto recebe dados segue executando (LOOP)
 
-        buscaInstrucao(&instrucao, entrada); // etapa 1: realiza a busca de instruções (fetch)
+    // nome do arquivo de entrada de instruções
+    char *nomeArquivo = "instrucoes.txt";
 
-        decodificaInstrucao(&instrucao); // etapa 2: realiza a decodificação da instrução e configura os sinais de controle da arquitetura (decode)
+    // inicializa variavel de arquivo que vai ser aberto
+    FILE *arquivo;
 
-        execucao(&instrucao); // etapa 3: realiza a execução da arquitetura 
+    // abre arquivo para leitura
+    arquivo = fopen(nomeArquivo, "r");
 
-        acessoNaMemoria(&instrucao); // etapa 4: realiza o acesso à memória quando necessário 
+    // inicializa variavel que vai armazenar  linha da instrução
+    char input[30];
 
-        writeBack(&instrucao); // etapa 5: informa que foi escrito no banco de registradores o valor
-        
-        // Incrementa o número de ciclos da arquitetura
-        ciclos++;
+    int pos = 0;
+    while (pos < TAM)
+    { // enaquanto pos for menor que tamanho de linhas do arquivo de entrada. Ou seja quantidade de instruções que quero ler do arquivo
+      char *linha = fgets(input, sizeof(input), arquivo); // pega linha do arquivo
 
-        // Imprime a quantidade de ciclos passada pela arquitetura
-        printf("\nCiclos: %d\n", ciclos);
+      buscaInstrucao(&instrucao, linha); // etapa 1: realiza a busca de instruções (fetch)
 
-        printf("-----------------------------------------------------");
+      decodificaInstrucao(&instrucao); // etapa 2: realiza a decodificação da instrução e configura os sinais de controle da arquitetura (decode)
 
-        printf("\n\nProxima instrucao: ");
+      execucao(&instrucao, ciclos); // etapa 3: realiza a execução da arquitetura 
+
+      acessoNaMemoria(&instrucao); // etapa 4: realiza o acesso à memória quando necessário 
+
+      writeBack(&instrucao); // etapa 5: informa que foi escrito no banco de registradores o valor
+      
+      // Incrementa o número de ciclos da arquitetura
+      pos++;
+
+      // Imprime a quantidade de ciclos passada pela arquitetura
+      printf("\nCiclos: %d\n", *ciclos);
+
+      printf("-----------------------------------------------------");
     }
+
+
+
+
+
+    
     return 0;
 }
 
